@@ -1,14 +1,30 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
+import Navbar from "../Shared/Navbar/Navbar";
 
 const Register = () => {
+
+    const {createUser} = useContext(AuthContext)
+
     const handleRegisterSubmit = e => {
           e.preventDefault()
           const email =  e.target.email.value;
           const password =  e.target.password.value;
-          console.log(email,password)
+        //   console.log(email,password)
+
+          createUser(email,password)
+          .then(result =>{
+            const user = result.user;
+            console.log(user)
+          })
+          .catch(error =>{
+            console.log(error.message)
+          })
     }
     return (
         <div>
+            <Navbar></Navbar>
              <div className="mt-10">
                 <h2 className="text-center text-2xl font-bold">Register  your account</h2>
                 <form onSubmit={handleRegisterSubmit} className="card-body w-3/6 m-auto">
